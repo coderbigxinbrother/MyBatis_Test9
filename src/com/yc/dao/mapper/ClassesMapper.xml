@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.dao.mapper.ClassesMapper">
+	<select id="findAllClasses" parameterType="int" resultMap="classesResultMap">
+	   select * from classes where cid = #{cid}
+	</select>
+        
+    <select id="findTeacher" parameterType="int" resultType="com.yc.bean.Teacher">
+       select tid,tname from teacher where tid = #{tid}
+    </select>
+    <!-- 通过resultMap -->
+    <resultMap type="com.yc.bean.Classes" id="classesResultMap">
+        <!-- id：主键列  加快查询速度-->
+        <id property="cid" column="cid"/>
+        <!-- 使用result来映射普通的列 -->
+        <result property="cname" column="cname"/>
+        
+        <!-- 关联对象使用association来映射对象-->
+        <association property="teacher" column="tid"  select="findTeacher" >
+            
+        </association>
+    </resultMap>
+</mapper>
